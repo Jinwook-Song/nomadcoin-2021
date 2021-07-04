@@ -4,8 +4,8 @@ import "fmt"
 
 
 func main() {
-	foods := []string{"potato", "pizza", "pasta"}
-	fmt.Printf("%v\n", foods)
-	foods = append(foods, "tomato")
-	fmt.Println(foods)
+	a := 2
+	b := &a  // a의 메모리 주소
+	a = 30
+	fmt.Println(&a, *b)
 }
