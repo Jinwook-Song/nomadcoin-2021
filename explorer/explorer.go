@@ -33,15 +33,20 @@ func add(rw http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
 		data := r.Form.Get("blockData")
 		blockchain.GetBlockchain().AddBlock(data)
+		// StatusPermanentRedirect: go constant
 		http.Redirect(rw, r, "/", http.StatusPermanentRedirect)
 	}
 }
 
 func Start() {
+	// load templates
+	// ParseGlob: using pattern
+	// Must: check error (helper function)
 	templates = template.Must(template.ParseGlob(templateDir + "pages/*.gohtml"))
 	templates = template.Must(templates.ParseGlob(templateDir + "partials/*.gohtml"))
 	http.HandleFunc("/", home)
 	http.HandleFunc("/add", add)
 	fmt.Printf("Listening on http://localhost%s ✅\n", port)
+	// log all the errors
 	log.Fatal(http.ListenAndServe(port, nil))
 }
